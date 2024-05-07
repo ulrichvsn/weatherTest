@@ -20,6 +20,9 @@
     <div v-else v-for="(data, index) in weatherData" :key="index">
       <WeatherCard :weather="data" />
     </div>
+
+    <!-- show error -->
+    <p class="text-center text-red-500" v-if="weatherError">{{ weatherError }}</p>
   </main>
 </template>
 
@@ -35,6 +38,7 @@ import { extractWeatherDetails } from '@/helpers/weatherHelper'
 const weatherData = ref<WeatherDetails[]>([])
 const location = ref<LocationResult | null>(null)
 const loading = ref(false)
+const weatherError = ref(null)
 
 const addLocation = async (data: LocationResult) => {
   loading.value = true
@@ -45,6 +49,7 @@ const addLocation = async (data: LocationResult) => {
     weatherData.value = extractWeatherDetails(dataWeather)
   } catch (error) {
     console.error('Error fetching weather:', error)
+    weatherError.value = error.message
   } finally {
     loading.value = false
   }
