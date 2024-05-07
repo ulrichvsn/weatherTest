@@ -4,7 +4,7 @@ export async function getWeather(
   latitude: number,
   longitude: number
 ): Promise<ForecastApiResponse> {
-  const apiKey = '65212b3d0f894936542704a703a7b0f3'
+  const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=fr`
   const response = await fetch(url)
   if (!response.ok) {
